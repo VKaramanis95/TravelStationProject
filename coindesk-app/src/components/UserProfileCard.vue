@@ -20,7 +20,7 @@ export default {
         email: faker.internet.email(),
         address: faker.address.streetAddress(),
         phone: faker.phone.phoneNumber(),
-        avatar: ""
+        avatar: "faker.image.avatar()"
       }
     };
   },
@@ -31,7 +31,7 @@ export default {
         this.user.avatar = data.results[0].picture.large;
       })
       .catch(() => {
-        this.user.avatar = "https://via.placeholder.com/100";
+        console.warn("Failed to load random avatar. Using fallback.");
       });
   }
 };
