@@ -8,7 +8,7 @@
       :options="chartOptions"
       :series="chartData"
     />
-    <p v-else-if="!isLoading">No data available for selected range.</p>
+    <p v-else-if="!isLoading"></p>
   </div>
 </template>
 

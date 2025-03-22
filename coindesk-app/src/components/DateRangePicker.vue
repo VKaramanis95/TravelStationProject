@@ -8,6 +8,7 @@
         v-model="startDate" 
         :min="'2010-01-01'"
         :max="today" 
+        @change="validateDates"
       />
     </div>
 
@@ -17,12 +18,14 @@
         type="date" 
         id="end-date" 
         v-model="endDate" 
-        :min="'2010-01-01'"  
+        :min="startDate || '2010-01-01'"  
         :max="today"  
+        @change="validateDates"
       />
     </div>
 
     <button class="fetch-button" @click="emitDateRange">Fetch Data</button>
+    <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
 
     <div class="range-buttons">
       <button @click="setDateRange(1)">1M</button>
@@ -35,6 +38,7 @@
 
     <button class="btc-price-button" @click="fetchBitcoinPrice">Get BTC Price</button>
     <p v-if="btcPrice">Current BTC Price: ${{ btcPrice }}</p>
+    <p v-if="btcError" class="error">{{ btcError }}</p>
   </div>
 </template>
 
@@ -44,41 +48,63 @@ export default {
     return {
       startDate: '',
       endDate: '',
-      today: new Date().toISOString().split('T')[0], 
-      btcPrice: null
+      today: new Date().toISOString().split('T')[0],
+      btcPrice: null,
+      btcError: '',
+      errorMessage: ''
     };
   },
   methods: {
     setDateRange(months) {
       const currentDate = new Date();
-      this.endDate = currentDate.toISOString().split('T')[0]; 
+      this.endDate = currentDate.toISOString().split('T')[0];
       const startDate = new Date();
       startDate.setMonth(currentDate.getMonth() - months);
-      this.startDate = startDate.toISOString().split('T')[0]; 
+      this.startDate = startDate.toISOString().split('T')[0];
       this.emitDateRange();
     },
 
     setMaxDateRange() {
-      this.startDate = '2010-01-01'; 
-      this.endDate = new Date().toISOString().split('T')[0]; 
+      this.startDate = '2010-01-01';
+      this.endDate = new Date().toISOString().split('T')[0];
       this.emitDateRange();
     },
 
+    validateDates() {
+      this.errorMessage = '';
+      if (!this.startDate || !this.endDate) {
+        this.errorMessage = 'Please select both start and end dates.';
+        return false;
+      }
+      if (this.startDate > this.endDate) {
+        this.errorMessage = 'Start date cannot be later than end date.';
+        return false;
+      }
+      return true;
+    },
+
     emitDateRange() {
+      if (!this.validateDates()) return;
       console.log("Start Date:", this.startDate, "End Date:", this.endDate);
       this.$emit('date-range-selected', { startDate: this.startDate, endDate: this.endDate });
     },
 
     async fetchBitcoinPrice() {
+      this.btcError = '';
       try {
         const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
         const data = await response.json();
-        this.btcPrice = data.bitcoin.usd;
+        this.btcPrice = data.bitcoin?.usd || null;
+        if (!this.btcPrice) {
+          throw new Error('No price data available.');
+        }
       } catch (error) {
+        this.btcError = 'Failed to fetch Bitcoin price. Please try again later.';
         console.error('Error fetching Bitcoin price:', error);
       }
     }
-  },
+  }
 };
 </script>
+
 
