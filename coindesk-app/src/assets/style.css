@@ -1,30 +1,265 @@
-//UserProfileCard
 .profile-card {
-    text-align: center;
-    border: 1px solid #ddd;
-    padding: 1rem;
-    border-radius: 10px;
-    max-width: 300px;
-    margin: auto;
-    background: white;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  .avatar {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-  }
+  max-width: 300px;
+  min-width: 272px; 
+  width: 100%;
+  background-color: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  /*margin: 0 auto;*/
+  box-sizing: border-box;
+  padding: 20px;
+  text-align: center;
+  font-family: Arial, sans-serif;
+  
+}
+
+.profile-card h2 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-bottom: 15px;
+}
+
+.profile-card p {
+  font-size: 16px;
+  color: #555;
+  margin: 5px 0;
+}
+
+.profile-card p strong {
+  color: #333;
+}
+
+@media (max-width: 600px) {
+    .profile-card {
+        padding: 15px;
+        width: 90%;
+    }
+
+    .profile-card h2 {
+        font-size: 1.5em;
+    }
+
+    .avatar {
+        width: 80px;
+        height: 80px;
+    }
+
+    .profile-card p {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 400px) {
+    .profile-card {
+        padding: 10px;
+        width: 100%;
+    }
+
+    .profile-card h2 {
+        font-size: 1.3em;
+    }
+
+    .avatar {
+        width: 70px;
+        height: 70px;
+    }
+
+    .profile-card p {
+        font-size: 12px;
+    }
+}
 
 
-//Date Picker
+
+/*Date Picker*/
+
 .date-range-picker {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
+    width: 100%; 
+    max-width: 300px;
+    min-width: 272px; 
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-sizing: border-box;
 }
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 5px;
+}
+
+input[type="date"] {
+    padding: 3px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 100%; 
+}
+
+
+button {
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    width: 100%; 
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.fetch-button {
+    margin-top: 10px;
+    width: 100%;
+}
+
+.range-buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+.range-buttons button {
+    padding: 5px 10px;
+    font-size: 12px;
+    flex: 1 1 45%; 
+}
+
+@media (max-width: 600px) {
+    .date-range-picker {
+        width: 90%; 
+        padding: 10px;
+    }
+    
+    button {
+        font-size: 12px; 
+    }
+    
+    .range-buttons button {
+        font-size: 10px; 
+        padding: 4px 8px;
+    }
+}
+
+@media (max-width: 400px) {
+    .date-range-picker {
+        width: 100%; 
+        padding: 8px;
+    }
+
+    input[type="date"] {
+        padding: 4px;
+    }
+
+    button {
+        font-size: 11px;
+    }
+}
+
+/*BitcoinChart*/
+
+.apexcharts-canvas {
+    margin-top: 20px;
+    border-radius: 8px;
+    background-color: white;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+
+/*General*/
 .error {
-    color: red;
+    color: #f44336;
+    font-weight: bold;
+    margin-bottom: 20px;
     text-align: center;
-    margin-bottom: 10px;
 }
+h1 {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: #333;
+  }
+
+/*App.vue*/
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px;
+    gap: 20px;
+  }
+  
+  /* Left Column */
+  .info-container {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+  }
+  
+  /* Right Column */
+  .chart-container {
+    width: 65%; 
+  }
+  
+  @media (max-width: 768px) {
+    .container {
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+  
+    .info-container {
+      width: 100%;
+      align-items: center;
+      order: -1; /* Appears first */
+    }
+  
+    .chart-container {
+      width: 100%;
+      order: 1; 
+    }
+  }
+  
+  .info-container .user-profile-card {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .info-container .date-picker {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .chart-container .apexcharts-canvas {
+    border-radius: 8px;
+    background-color: white;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+  }
+  
+  
