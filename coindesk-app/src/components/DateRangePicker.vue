@@ -36,7 +36,7 @@
       <button @click="setMaxDateRange">Max</button>
     </div>
 
-    <button class="btc-price-button" @click="fetchBitcoinPrice">Get BTC Price</button>
+    <button class="button" @click="fetchBitcoinPrice">Get BTC Price</button>
     <p v-if="btcPrice">Current BTC Price: ${{ btcPrice }}</p>
     <p v-if="btcError" class="error">{{ btcError }}</p>
   </div>
