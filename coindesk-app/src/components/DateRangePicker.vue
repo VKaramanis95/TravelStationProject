@@ -6,7 +6,7 @@
         type="date" 
         id="start-date" 
         v-model="startDate" 
-        :min="'2010-01-01'"
+        :min="oneYearAgo" 
         :max="today" 
         @change="validateDates"
       />
@@ -18,8 +18,8 @@
         type="date" 
         id="end-date" 
         v-model="endDate" 
-        :min="startDate || '2010-01-01'"  
-        :max="today"  
+        :min="startDate || oneYearAgo" 
+        :max="today" 
         @change="validateDates"
       />
     </div>
@@ -32,8 +32,6 @@
       <button @click="setDateRange(3)">3M</button>
       <button @click="setDateRange(6)">6M</button>
       <button @click="setDateRange(12)">1Y</button>
-      <button @click="setDateRange(60)">5Y</button>
-      <button @click="setMaxDateRange">Max</button>
     </div>
 
     <button class="button" @click="fetchBitcoinPrice">Get BTC Price</button>
@@ -41,14 +39,14 @@
     <p v-if="btcError" class="error">{{ btcError }}</p>
   </div>
 </template>
-
 <script>
 export default {
   data() {
     return {
       startDate: '',
       endDate: '',
-      today: new Date().toISOString().split('T')[0],
+      today: new Date().toISOString().split('T')[0], // Today's date in ISO format
+      oneYearAgo: new Date(new Date().setFullYear(new Date().getFullYear() - 1)).toISOString().split('T')[0], // Date one year back in ISO format
       btcPrice: null,
       btcError: '',
       errorMessage: ''
@@ -61,12 +59,6 @@ export default {
       const startDate = new Date();
       startDate.setMonth(currentDate.getMonth() - months);
       this.startDate = startDate.toISOString().split('T')[0];
-      this.emitDateRange();
-    },
-
-    setMaxDateRange() {
-      this.startDate = '2010-01-01';
-      this.endDate = new Date().toISOString().split('T')[0];
       this.emitDateRange();
     },
 
@@ -106,5 +98,3 @@ export default {
   }
 };
 </script>
-
-
