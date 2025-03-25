@@ -45,8 +45,8 @@ export default {
     return {
       startDate: '',
       endDate: '',
-      today: new Date().toISOString().split('T')[0], // Today's date in ISO format
-      oneYearAgo: new Date(new Date().setFullYear(new Date().getFullYear() - 1)).toISOString().split('T')[0], // Date one year back in ISO format
+      today: new Date().toISOString().split('T')[0], 
+      oneYearAgo: new Date(new Date().setFullYear(new Date().getFullYear() - 1)).toISOString().split('T')[0], 
       btcPrice: null,
       btcError: '',
       errorMessage: ''

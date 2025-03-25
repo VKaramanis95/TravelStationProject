@@ -2,6 +2,8 @@
 
 This is a simple one-page Vue application that fetches Bitcoin price data from the **CoinGecko API** and displays it using **ApexCharts**. Additionally, it includes a **user profile section** generated with Faker and a **date range picker** for selecting historical Bitcoin prices.
 
+-**Date Range Restriction:** The free tier of the API restricts fetching data to a maximum range of one year from the current date. If you need to fetch data for a longer historical period, you may need to upgraded subscription plans.
+
 Also you can view the live demo of this application here: [Travel Station Demo](https://travelstation.netlify.app/)
 
 

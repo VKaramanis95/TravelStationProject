@@ -48,7 +48,7 @@ describe('DateRangePicker.vue', () => {
   });
 
   it('sets a date range properly when the range button is clicked', async () => {
-    const rangeButton = wrapper.find('.range-buttons button:nth-child(1)'); // 1M button
+    const rangeButton = wrapper.find('.range-buttons button:nth-child(1)'); 
     await rangeButton.trigger('click');
     expect(wrapper.vm.endDate).toBe(new Date().toISOString().split('T')[0]);
     const oneMonthAgo = new Date();
