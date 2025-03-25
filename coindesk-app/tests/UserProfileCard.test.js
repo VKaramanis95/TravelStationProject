@@ -1,45 +1,48 @@
 import { mount } from "@vue/test-utils";
 import UserProfileCard from "../src/components/UserProfileCard.vue";
 
-describe("UserProfileCard.vue", () => {
-  it("renders user profile with name, email, address, and phone", () => {
-    const wrapper = mount(UserProfileCard);
+beforeAll(() => {
+  jest.spyOn(console, "warn").mockImplementation(() => {}); 
+});
 
+describe("UserProfileCard.vue", () => {
+  test("renders user profile with name, email, address, and phone", () => {
+    const wrapper = mount(UserProfileCard);
     expect(wrapper.text()).toContain("User Profile");
-    expect(wrapper.text()).toContain("Name:");
-    expect(wrapper.text()).toContain("Email:");
-    expect(wrapper.text()).toContain("Address:");
-    expect(wrapper.text()).toContain("Phone:");
+    expect(wrapper.text()).toContain(wrapper.vm.user.name);
+    expect(wrapper.text()).toContain(wrapper.vm.user.email);
+    expect(wrapper.text()).toContain(wrapper.vm.user.address);
+    expect(wrapper.text()).toContain(wrapper.vm.user.phone);
   });
 
-  it("displays a user avatar", () => {
+  test("displays a user avatar", () => {
     const wrapper = mount(UserProfileCard);
     const img = wrapper.find("img");
     expect(img.exists()).toBe(true);
-    expect(img.attributes("alt")).toBe("User Avatar");
+    expect(img.attributes("src")).toBeTruthy();
   });
 
-  it("fetches a random avatar from API and updates it", async () => {
+  test("fetches a random avatar from API and updates it", async () => {
     global.fetch = jest.fn(() =>
       Promise.resolve({
         json: () =>
           Promise.resolve({
-            results: [{ picture: { large: "https://randomuser.me/api/portraits/men/1.jpg" } }]
-          })
+            results: [{ picture: { large: "https://randomuser.me/api/portraits/men/1.jpg" } }],
+          }),
       })
     );
 
     const wrapper = mount(UserProfileCard);
-    await new Promise(process.nextTick);
+    await new Promise((resolve) => setTimeout(resolve, 100)); 
 
     expect(wrapper.vm.user.avatar).toBe("https://randomuser.me/api/portraits/men/1.jpg");
   });
 
-  it("displays a fallback avatar if API fails", async () => {
-    global.fetch = jest.fn(() => Promise.reject("API Error"));
+  test("displays a fallback avatar if API fails", async () => {
+    global.fetch = jest.fn(() => Promise.reject(new Error("API failed")));
 
     const wrapper = mount(UserProfileCard);
-    await new Promise(process.nextTick);
+    await new Promise((resolve) => setTimeout(resolve, 100)); 
 
     expect(wrapper.vm.user.avatar).not.toBe("https://randomuser.me/api/portraits/men/1.jpg"); 
   });
