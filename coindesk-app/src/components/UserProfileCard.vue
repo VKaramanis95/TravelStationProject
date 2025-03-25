@@ -10,29 +10,28 @@
 </template>
 
 <script>
-import faker from "faker";
+import { faker } from "@faker-js/faker";
 
 export default {
   data() {
     return {
       user: {
-        name: faker.name.findName(),
+        name: faker.person.fullName(),
         email: faker.internet.email(),
-        address: faker.address.streetAddress(),
-        phone: faker.phone.phoneNumber(),
-        avatar: "faker.image.avatar()"
+        address: faker.location.streetAddress(),
+        phone: faker.phone.number(),
+        avatar: faker.image.avatar()
       }
     };
   },
-  created() {
-    fetch("https://randomuser.me/api/")
-      .then(response => response.json())
-      .then(data => {
-        this.user.avatar = data.results[0].picture.large;
-      })
-      .catch(() => {
-        console.warn("Failed to load random avatar. Using fallback.");
-      });
+  async created() {
+    try {
+      const response = await fetch("https://randomuser.me/api/");
+      const data = await response.json();
+      this.user.avatar = data.results[0].picture.large;
+    } catch (error) {
+      console.warn("Failed to load random avatar. Using fallback.");
+    }
   }
 };
 </script>
