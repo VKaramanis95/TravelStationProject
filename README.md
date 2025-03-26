@@ -13,8 +13,8 @@ Also you can view the live demo of this application here: [Travel Station Demo](
 - **Bitcoin Price Chart**: Fetches historical Bitcoin data from the `CoinGecko API` and displays it using `ApexCharts`
 - **Date Range Picker**: Allows users to select a date range for fetching Bitcoin price history
 - **Error Handling**: Handles API failures gracefully with proper messages
-- **Unit Testing**: Includes tests using Jest/Mocha for component verification
-- **Responsive Design**: Fully optimized for mobile and desktop
+- **Unit Testing**: Includes tests using Jest for component verification
+- **Responsive Design**
 
 ---
 
